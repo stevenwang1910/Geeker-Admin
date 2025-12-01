@@ -16,6 +16,37 @@
       }
     },
     {
+      "path": "/news",
+      "name": "news",
+      "component": "/news/index",
+      "meta": {
+        "icon": "Document",
+        "title": "新闻资讯",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/news/detail/:id",
+          "name": "newsDetail",
+          "component": "/news/detail",
+          "meta": {
+            "icon": "Menu",
+            "title": "新闻详情",
+            "activeMenu": "/news",
+            "isLink": "",
+            "isHide": true,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
       "path": "/dataScreen",
       "name": "dataScreen",
       "component": "/dataScreen/index",

@@ -4,6 +4,7 @@ import { useAuthStore } from "@/stores/modules/auth";
 import { LOGIN_URL, ROUTER_WHITE_LIST } from "@/config";
 import { initDynamicRouter } from "@/routers/modules/dynamicRouter";
 import { staticRouter, errorRouter } from "@/routers/modules/staticRouter";
+import skuRoutes from "@/routers/modules/sku";
 import NProgress from "@/config/nprogress";
 
 const mode = import.meta.env.VITE_ROUTER_MODE;
@@ -31,7 +32,7 @@ const routerMode = {
  * */
 const router = createRouter({
   history: routerMode[mode](),
-  routes: [...staticRouter, ...errorRouter],
+  routes: [...staticRouter, ...errorRouter, ...skuRoutes],
   strict: false,
   scrollBehavior: () => ({ left: 0, top: 0 })
 });

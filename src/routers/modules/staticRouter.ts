@@ -23,7 +23,18 @@ export const staticRouter: RouteRecordRaw[] = [
     component: () => import("@/layouts/index.vue"),
     // component: () => import("@/layouts/indexAsync.vue"),
     redirect: HOME_URL,
-    children: []
+    children: [
+      {
+        path: "/news",
+        name: "news",
+        component: () => import("@/views/news/index.vue"),
+        meta: {
+          title: "新闻资讯",
+          icon: "News",
+          isKeepAlive: true
+        }
+      }
+    ]
   }
 ];
 

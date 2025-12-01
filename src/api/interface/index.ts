@@ -88,3 +88,34 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// 新闻模块
+export namespace News {
+  // 分类列表响应参数
+  export interface ResCategories {
+    id: number;
+    name: string;
+    sort_order: number;
+    is_active: boolean;
+  }
+
+  // 文章列表响应参数
+  export interface ResArticles extends ResPage<ResArticleItem> {}
+
+  export interface ResArticleItem {
+    id: number;
+    title: string;
+    summary?: string;
+    publish_time: string;
+    tag: string[];
+    thumbnail_url?: string;
+  }
+
+  // 热门文章响应参数
+  export interface ResHotArticles {
+    id: number;
+    title: string;
+    rank: number;
+    score: number;
+  }
+}

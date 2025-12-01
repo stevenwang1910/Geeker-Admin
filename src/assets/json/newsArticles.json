@@ -1,0 +1,75 @@
+{
+  "code": 200,
+  "msg": "成功",
+  "data": {
+    "list": [
+      {
+        "id": 1,
+        "title": "习近平总书记在全国两会期间的重要讲话精神引发热烈反响",
+        "summary": "习近平总书记在全国两会期间发表的重要讲话，为我们指明了前进方向，注入了强大动力。",
+        "publish_time": "2024-05-20 14:30:00",
+        "tag": ["时政", "要闻"],
+        "thumbnail_url": "https://via.placeholder.com/300x200/009688/ffffff?text=时政新闻"
+      },
+      {
+        "id": 2,
+        "title": "2024年中国经济运行开局良好，GDP同比增长5.2%",
+        "summary": "国家统计局今日发布数据，2024年一季度中国GDP同比增长5.2%，经济运行开局良好。",
+        "publish_time": "2024-05-19 10:00:00",
+        "tag": ["财经", "数据"],
+        "thumbnail_url": "https://via.placeholder.com/300x200/1976d2/ffffff?text=财经新闻"
+      },
+      {
+        "id": 3,
+        "title": "故宫博物院推出新展览，展现中国古代宫廷生活全貌",
+        "summary": "故宫博物院今日推出\"宫廷生活面面观\"展览，通过珍贵文物展现中国古代宫廷生活的全貌。",
+        "publish_time": "2024-05-18 09:30:00",
+        "tag": ["文旅", "展览"],
+        "thumbnail_url": "https://via.placeholder.com/300x200/795548/ffffff?text=文旅新闻"
+      },
+      {
+        "id": 4,
+        "title": "2024年上海国际车展隆重开幕，多款新能源汽车首发亮相",
+        "summary": "2024年上海国际车展今日隆重开幕，全球各大汽车厂商纷纷展出最新车型，多款新能源汽车首发亮相。",
+        "publish_time": "2024-05-17 16:00:00",
+        "tag": ["汽车", "车展"],
+        "thumbnail_url": "https://via.placeholder.com/300x200/f44336/ffffff?text=汽车新闻"
+      },
+      {
+        "id": 5,
+        "title": "中国男足在世界杯预选赛中取得关键胜利，晋级下一轮赛事",
+        "summary": "中国男足在今日进行的世界杯预选赛中，以2-1的比分战胜对手，取得关键胜利，成功晋级下一轮赛事。",
+        "publish_time": "2024-05-16 21:30:00",
+        "tag": ["体育", "足球"],
+        "thumbnail_url": "https://via.placeholder.com/300x200/ff9800/ffffff?text=体育新闻"
+      },
+      {
+        "id": 6,
+        "title": "我国成功发射新一代通信卫星，通信能力提升5倍以上",
+        "summary": "今日，我国在西昌卫星发射中心成功发射新一代通信卫星，该卫星的通信能力提升5倍以上。",
+        "publish_time": "2024-05-15 12:00:00",
+        "tag": ["科技", "航天"],
+        "thumbnail_url": "https://via.placeholder.com/300x200/9c27b0/ffffff?text=科技新闻"
+      },
+      {
+        "id": 7,
+        "title": "2024年春节档电影票房创历史新高，总票房突破100亿元",
+        "summary": "国家电影局今日发布数据，2024年春节档电影票房创历史新高，总票房突破100亿元。",
+        "publish_time": "2024-05-14 15:30:00",
+        "tag": ["娱乐", "电影"],
+        "thumbnail_url": "https://via.placeholder.com/300x200/e91e63/ffffff?text=娱乐新闻"
+      },
+      {
+        "id": 8,
+        "title": "世界卫生组织发布新指南，建议成年人每天至少运动30分钟",
+        "summary": "世界卫生组织今日发布新的运动指南，建议成年人每天至少运动30分钟，以保持身体健康。",
+        "publish_time": "2024-05-13 11:00:00",
+        "tag": ["健康", "运动"],
+        "thumbnail_url": "https://via.placeholder.com/300x200/4caf50/ffffff?text=健康新闻"
+      }
+    ],
+    "page": 1,
+    "size": 8,
+    "total": 16
+  }
+}

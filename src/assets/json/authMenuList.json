@@ -30,6 +30,20 @@
       }
     },
     {
+      "path": "/news",
+      "name": "news",
+      "component": "/news/index",
+      "meta": {
+        "icon": "News",
+        "title": "新闻资讯",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
       "path": "/proTable",
       "name": "proTable",
       "redirect": "/proTable/useProTable",

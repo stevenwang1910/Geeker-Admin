@@ -1,0 +1,38 @@
+{
+  "code": "0",
+  "msg": "success",
+  "data": {
+    "list": [
+      {
+        "id": "1",
+        "dictName": "用户状态",
+        "dictType": "user_status",
+        "status": 1,
+        "remark": "用户状态字典",
+        "createTime": "2023-01-01 12:00:00",
+        "updateTime": "2023-01-01 12:00:00"
+      },
+      {
+        "id": "2",
+        "dictName": "用户性别",
+        "dictType": "user_gender",
+        "status": 1,
+        "remark": "用户性别字典",
+        "createTime": "2023-01-02 12:00:00",
+        "updateTime": "2023-01-02 12:00:00"
+      },
+      {
+        "id": "3",
+        "dictName": "菜单类型",
+        "dictType": "menu_type",
+        "status": 1,
+        "remark": "菜单类型字典",
+        "createTime": "2023-01-03 12:00:00",
+        "updateTime": "2023-01-03 12:00:00"
+      }
+    ],
+    "pageNum": 1,
+    "pageSize": 10,
+    "total": 3
+  }
+}

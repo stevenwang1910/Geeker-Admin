@@ -1,0 +1,59 @@
+{
+  "code": "0",
+  "msg": "success",
+  "data": {
+    "list": [
+      {
+        "id": "1",
+        "dictId": "1",
+        "dictLabel": "启用",
+        "dictValue": "1",
+        "status": 1,
+        "sort": 1,
+        "parentId": "0",
+        "remark": "用户启用状态",
+        "createTime": "2023-01-01 12:00:00",
+        "updateTime": "2023-01-01 12:00:00"
+      },
+      {
+        "id": "2",
+        "dictId": "1",
+        "dictLabel": "禁用",
+        "dictValue": "0",
+        "status": 1,
+        "sort": 2,
+        "parentId": "0",
+        "remark": "用户禁用状态",
+        "createTime": "2023-01-01 12:00:00",
+        "updateTime": "2023-01-01 12:00:00"
+      },
+      {
+        "id": "3",
+        "dictId": "2",
+        "dictLabel": "男",
+        "dictValue": "1",
+        "status": 1,
+        "sort": 1,
+        "parentId": "0",
+        "remark": "男性",
+        "createTime": "2023-01-02 12:00:00",
+        "updateTime": "2023-01-02 12:00:00"
+      },
+      {
+        "id": "4",
+        "dictId": "2",
+        "dictLabel": "女",
+        "dictValue": "2",
+        "status": 1,
+        "sort": 2,
+        "parentId": "0",
+        "remark": "女性",
+        "createTime": "2023-01-02 12:00:00",
+        "updateTime": "2023-01-02 12:00:00"
+      }
+    ],
+    "pageNum": 1,
+    "pageSize": 10,
+    "total": 4
+  }
+}

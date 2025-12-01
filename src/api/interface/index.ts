@@ -88,3 +88,57 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// 字典管理模块
+export namespace Dict {
+  // 字典类型请求参数
+  export interface ReqDictTypeParams extends ReqPage {
+    dictName: string;
+    dictType: string;
+    status: number;
+    createTime: string[];
+  }
+  // 字典类型响应数据
+  export interface ResDictTypeList {
+    id: string;
+    dictName: string;
+    dictType: string;
+    status: number;
+    remark: string;
+    createTime: string;
+    updateTime: string;
+  }
+  // 字典项请求参数
+  export interface ReqDictItemParams extends ReqPage {
+    dictType: string;
+    dictLabel: string;
+    dictValue: string;
+    status: number;
+    parentValue: string;
+  }
+  // 字典项响应数据
+  export interface ResDictItemList {
+    id: string;
+    dictType: string;
+    dictLabel: string;
+    dictValue: string;
+    status: number;
+    remark: string;
+    sort: number;
+    parentValue: string;
+    children?: ResDictItemList[];
+    createTime: string;
+    updateTime: string;
+  }
+  // 字典变更历史响应数据
+  export interface ResDictHistoryList {
+    id: string;
+    dictType: string;
+    dictLabel: string;
+    dictValue: string;
+    operationType: string;
+    operationContent: string;
+    operator: string;
+    operationTime: string;
+  }
+}

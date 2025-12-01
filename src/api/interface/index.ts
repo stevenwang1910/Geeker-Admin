@@ -88,3 +88,75 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// SKU管理模块
+export namespace Sku {
+  // SKU列表查询参数
+  export interface ReqSkuListParams extends ReqPage {
+    product_id?: string;
+    keyword?: string;
+    status?: number;
+  }
+  // SKU详情参数
+  export interface ReqSkuDetailParams {
+    id: string;
+  }
+  // SKU保存参数
+  export interface ReqSkuSaveParams {
+    id?: string;
+    productId: string;
+    skuCode: string;
+    skuName: string;
+    status: number;
+    sort?: number;
+    remark?: string;
+    specGroups: {
+      name: string;
+      values: string[];
+    }[];
+    skuCombinations: {
+      specs: { [key: string]: string };
+      imageUrl?: string;
+      price: number;
+      stock: number;
+    }[];
+  }
+  // SKU状态切换参数
+  export interface ReqSkuStatusParams {
+    id: string;
+    status: number;
+  }
+  // SKU列表响应数据
+  export interface ResSkuList {
+    id: string;
+    skuCode: string;
+    skuName: string;
+    productName: string;
+    status: number;
+    price: number;
+    stock: number;
+    createTime: string;
+  }
+  // SKU详情响应数据
+  export interface ResSkuDetail {
+    id: string;
+    productId: string;
+    productName: string;
+    skuCode: string;
+    skuName: string;
+    status: number;
+    sort: number;
+    remark: string;
+    specGroups: {
+      name: string;
+      values: string[];
+    }[];
+    skuCombinations: {
+      id?: string;
+      specs: { [key: string]: string };
+      imageUrl?: string;
+      price: number;
+      stock: number;
+    }[];
+  }
+}

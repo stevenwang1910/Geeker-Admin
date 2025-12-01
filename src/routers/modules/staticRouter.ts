@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 import { HOME_URL, LOGIN_URL } from "@/config";
+import { tourRouter } from "./tourRouter";
 
 /**
  * staticRouter (静态路由)
@@ -9,6 +10,7 @@ export const staticRouter: RouteRecordRaw[] = [
     path: "/",
     redirect: HOME_URL
   },
+  tourRouter,
   {
     path: LOGIN_URL,
     name: "login",

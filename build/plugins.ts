@@ -11,6 +11,7 @@ import viteCompression from "vite-plugin-compression";
 import vueSetupExtend from "unplugin-vue-setup-extend-plus/vite";
 import NextDevTools from "vite-plugin-vue-devtools";
 import { codeInspectorPlugin } from "code-inspector-plugin";
+import { viteMockServe } from "vite-plugin-mock";
 
 /**
  * 创建 vite 插件
@@ -31,7 +32,7 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
     // 创建打包压缩配置
     createCompression(viteEnv),
     // 注入变量到 html 文件
-    createHtmlPlugin({
+    createHtmlPlugin({ 
       minify: true,
       inject: {
         data: { title: VITE_GLOB_APP_TITLE }
@@ -42,12 +43,22 @@ export const createVitePlugins = (viteEnv: ViteEnv): (PluginOption | PluginOptio
       iconDirs: [resolve(process.cwd(), "src/assets/icons")],
       symbolId: "icon-[dir]-[name]"
     }),
+    // mock服务
+    viteMockServe({
+      mockPath: "src/mock",
+      localEnabled: true,
+      prodEnabled: false,
+      injectCode: `
+        import { setupProdMockServer } from '../mock/index';
+        setupProdMockServer();
+      `
+    }),
     // vitePWA
     VITE_PWA && createVitePwa(viteEnv),
     // 是否生成包预览，分析依赖包大小做优化处理
     VITE_REPORT && (visualizer({ filename: "stats.html", gzipSize: true, brotliSize: true }) as PluginOption),
     // 自动 IDE 并将光标定位到 DOM 对应的源代码位置。see: https://inspector.fe-dev.cn/guide/start.html
-    VITE_CODEINSPECTOR &&
+    VITE_CODEINSPECTOR && 
       codeInspectorPlugin({
         bundler: "vite"
       })

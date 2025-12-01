@@ -162,6 +162,51 @@
       ]
     },
     {
+      "path": "/sku",
+      "name": "sku",
+      "redirect": "/sku/list",
+      "meta": {
+        "icon": "Goods",
+        "title": "SKU管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/sku/list",
+          "name": "skuList",
+          "component": "/sku/list",
+          "meta": {
+            "icon": "Menu",
+            "title": "SKU列表",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/sku/edit/:id",
+          "name": "skuEdit",
+          "component": "/sku/edit",
+          "meta": {
+            "icon": "Menu",
+            "title": "SKU编辑",
+            "activeMenu": "/sku/list",
+            "isLink": "",
+            "isHide": true,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
       "path": "/auth",
       "name": "auth",
       "redirect": "/auth/menu",

@@ -106,6 +106,21 @@ const resetForm = (formEl: FormInstance | undefined) => {
   formEl.resetFields();
 };
 
+// 自动登录函数
+const autoLogin = () => {
+  // 检查是否为开发模式
+  if (import.meta.env.DEV) {
+    // 设置默认用户名和密码
+    loginForm.username = "admin";
+    loginForm.password = "123456";
+
+    // 延迟执行登录，确保表单已完全渲染
+    setTimeout(() => {
+      login(loginFormRef.value);
+    }, 500);
+  }
+};
+
 onMounted(() => {
   // 监听 enter 事件（调用登录）
   document.onkeydown = (e: KeyboardEvent) => {
@@ -114,6 +129,9 @@ onMounted(() => {
       login(loginFormRef.value);
     }
   };
+
+  // 开发模式下自动登录
+  autoLogin();
 });
 
 onBeforeUnmount(() => {
@@ -122,5 +140,5 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="scss">
-@import "../index.scss";
+@import "../index";
 </style>

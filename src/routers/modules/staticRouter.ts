@@ -24,6 +24,14 @@ export const staticRouter: RouteRecordRaw[] = [
     // component: () => import("@/layouts/indexAsync.vue"),
     redirect: HOME_URL,
     children: []
+  },
+  {
+    path: "/tour-config",
+    name: "tourConfig",
+    component: () => import("@/views/tourConfig/index.vue"),
+    meta: {
+      title: "引导页配置"
+    }
   }
 ];
 

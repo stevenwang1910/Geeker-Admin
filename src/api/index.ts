@@ -8,6 +8,7 @@ import { checkStatus } from "./helper/checkStatus";
 import { AxiosCanceler } from "./helper/axiosCancel";
 import { useUserStore } from "@/stores/modules/user";
 import router from "@/routers";
+import { logger } from "@/utils";
 
 export interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   loading?: boolean;
@@ -48,6 +49,16 @@ class RequestHttp {
         if (config.headers && typeof config.headers.set === "function") {
           config.headers.set("x-access-token", userStore.token);
         }
+        // 记录请求日志
+        logger.info(`API请求: ${config.method?.toUpperCase()} ${config.url}`, {
+          request: {
+            method: config.method,
+            url: config.url,
+            params: config.params,
+            data: config.data,
+            headers: Object.fromEntries(config.headers as any)
+          }
+        });
         return config;
       },
       (error: AxiosError) => {
@@ -78,12 +89,31 @@ class RequestHttp {
           ElMessage.error(data.msg);
           return Promise.reject(data);
         }
+        // 记录响应日志
+        logger.info(`API响应成功: ${config.method?.toUpperCase()} ${config.url}`, {
+          request: {
+            method: config.method,
+            url: config.url
+          },
+          response: data
+        });
         // 成功请求（在页面上除非特殊情况，否则不用处理失败逻辑）
         return data;
       },
       async (error: AxiosError) => {
-        const { response } = error;
+        const { response, config } = error;
         tryHideFullScreenLoading();
+        // 记录错误日志
+        logger.error(`API响应失败: ${config?.method?.toUpperCase()} ${config?.url}`, {
+          request: {
+            method: config?.method,
+            url: config?.url,
+            params: config?.params,
+            data: config?.data
+          },
+          response: response?.data,
+          error: error
+        });
         // 请求超时 && 网络错误单独判断，没有 response
         if (error.message.indexOf("timeout") !== -1) ElMessage.error("请求超时！请您稍后重试");
         if (error.message.indexOf("Network Error") !== -1) ElMessage.error("网络错误！请您稍后重试");

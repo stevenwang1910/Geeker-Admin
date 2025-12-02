@@ -1,5 +1,6 @@
 import { isArray } from "@/utils/is";
 import { FieldNamesProps } from "@/components/ProTable/interface";
+import { logger, LogLevel } from "@/utils/logger";
 
 const mode = import.meta.env.VITE_ROUTER_MODE;
 
@@ -309,3 +310,5 @@ export function findItemNested(enumData: any, callValue: any, value: string, chi
     if (current[children]) return findItemNested(current[children], callValue, value, children);
   }, null);
 }
+
+export { logger, LogLevel };

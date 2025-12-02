@@ -10,8 +10,7 @@
       :span-method="objectSpanMethod"
       :show-summary="true"
       :summary-method="getSummaries"
-      @row-click="rowClick"
-    >
+      @row-click="rowClick">
       <!-- 表格 header 按钮 -->
       <template #tableHeader="scope">
         <el-button type="primary" :icon="CirclePlus" @click="proTable?.element?.toggleAllSelection">全选 / 全不选</el-button>
@@ -44,6 +43,7 @@ import { useHandleData } from "@/hooks/useHandleData";
 import ProTable from "@/components/ProTable/index.vue";
 import { CirclePlus, Pointer, Delete, Refresh } from "@element-plus/icons-vue";
 import type { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
+import type { DefaultRow } from "element-plus/es/components/table/src/table/defaults";
 import { ProTableInstance, ColumnProps, HeaderRenderScope } from "@/components/ProTable/interface";
 import { getUserList, deleteUser, resetUserPassWord, getUserStatus, getUserGender } from "@/api/modules/user";
 
@@ -107,7 +107,7 @@ const setCurrent = () => {
 };
 
 // 表尾合计行（自行根据条件计算）
-interface SummaryMethodProps<T = User.ResUserList> {
+interface SummaryMethodProps<T extends DefaultRow = User.ResUserList> {
   columns: TableColumnCtx<T>[];
   data: T[];
 }

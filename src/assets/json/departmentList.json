@@ -1,0 +1,82 @@
+{
+  "code": 200,
+  "msg": "success",
+  "data": [
+    {
+      "id": 1,
+      "parentId": 0,
+      "deptName": "总公司",
+      "deptCode": "DEPT0001",
+      "leader": "张三",
+      "phone": "13800138000",
+      "sort": 1,
+      "status": 1,
+      "level": 1,
+      "createTime": "2024-01-01 00:00:00",
+      "children": [
+        {
+          "id": 2,
+          "parentId": 1,
+          "deptName": "技术部",
+          "deptCode": "DEPT0002",
+          "leader": "李四",
+          "phone": "13800138001",
+          "sort": 1,
+          "status": 1,
+          "level": 2,
+          "createTime": "2024-01-02 00:00:00",
+          "children": [
+            {
+              "id": 3,
+              "parentId": 2,
+              "deptName": "前端开发组",
+              "deptCode": "DEPT0003",
+              "leader": "王五",
+              "phone": "13800138002",
+              "sort": 1,
+              "status": 1,
+              "level": 3,
+              "createTime": "2024-01-03 00:00:00"
+            },
+            {
+              "id": 4,
+              "parentId": 2,
+              "deptName": "后端开发组",
+              "deptCode": "DEPT0004",
+              "leader": "赵六",
+              "phone": "13800138003",
+              "sort": 2,
+              "status": 1,
+              "level": 3,
+              "createTime": "2024-01-04 00:00:00"
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "parentId": 1,
+          "deptName": "产品部",
+          "deptCode": "DEPT0005",
+          "leader": "孙七",
+          "phone": "13800138004",
+          "sort": 2,
+          "status": 1,
+          "level": 2,
+          "createTime": "2024-01-05 00:00:00"
+        },
+        {
+          "id": 6,
+          "parentId": 1,
+          "deptName": "运营部",
+          "deptCode": "DEPT0006",
+          "leader": "周八",
+          "phone": "13800138005",
+          "sort": 3,
+          "status": 1,
+          "level": 2,
+          "createTime": "2024-01-06 00:00:00"
+        }
+      ]
+    }
+  ]
+}

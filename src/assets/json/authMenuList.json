@@ -481,6 +481,36 @@
       ]
     },
     {
+      "path": "/system",
+      "name": "system",
+      "redirect": "/system/departmentManage",
+      "meta": {
+        "icon": "Setting",
+        "title": "系统管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/system/departmentManage",
+          "name": "departmentManage",
+          "component": "/system/departmentManage/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "部门管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
       "path": "/echarts",
       "name": "echarts",
       "redirect": "/echarts/waterChart",

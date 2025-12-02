@@ -40,6 +40,7 @@
       :border="border"
       :row-key="rowKey"
       @selection-change="selectionChange"
+      @sort-change="handleSortChange"
     >
       <!-- 默认插槽 -->
       <slot />
@@ -182,18 +183,73 @@ onMounted(() => {
   props.data && (pageable.value.total = props.data.length);
 });
 
+// 排序字段和排序方式
+const sortInfo = reactive({
+  prop: '',
+  order: ''
+});
+
+// 监听表格排序事件
+const handleSortChange = ({ prop, order }: any) => {
+  sortInfo.prop = prop;
+  sortInfo.order = order;
+};
+
 // 处理表格数据
 const processTableData = computed(() => {
-  if (!props.data) return tableData.value;
-  if (!props.pagination) return props.data;
-  return props.data.slice(
-    (pageable.value.pageNum - 1) * pageable.value.pageSize,
-    pageable.value.pageSize * pageable.value.pageNum
-  );
+  let data = props.data ? [...props.data] : tableData.value;
+  
+  // 处理搜索
+  if (Object.keys(searchParam.value).length > 0 && props.data) {
+    data = data.filter(item => {
+      return Object.keys(searchParam.value).every(key => {
+        const value = searchParam.value[key];
+        if (!value) return true;
+        const prop = key.replace(/([A-Z])/g, '_$1').toLowerCase();
+        if (item[prop] !== undefined) {
+          return String(item[prop]).toLowerCase().includes(String(value).toLowerCase());
+        }
+        if (item[key] !== undefined) {
+          return String(item[key]).toLowerCase().includes(String(value).toLowerCase());
+        }
+        return false;
+      });
+    });
+  }
+  
+  // 处理排序
+  if (sortInfo.prop && sortInfo.order && props.data) {
+    data.sort((a, b) => {
+      const valA = a[sortInfo.prop];
+      const valB = b[sortInfo.prop];
+      if (typeof valA === 'string' && typeof valB === 'string') {
+        return sortInfo.order === 'ascending' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+      }
+      return sortInfo.order === 'ascending' ? (valA - valB) : (valB - valA);
+    });
+  }
+  
+  // 处理分页
+  if (props.pagination && props.data) {
+    pageable.value.total = data.length;
+    return data.slice(
+      (pageable.value.pageNum - 1) * pageable.value.pageSize,
+      pageable.value.pageSize * pageable.value.pageNum
+    );
+  }
+  
+  return data;
 });
 
 // 监听页面 initParam 改化，重新获取表格数据
 watch(() => props.initParam, getTableList, { deep: true });
+
+// 监听搜索参数变化，处理静态数据搜索
+watch(() => searchParam.value, () => {
+  if (props.data) {
+    pageable.value.pageNum = 1;
+  }
+}, { deep: true });
 
 // 接收 columns 并设置为响应式
 const tableColumns = reactive<ColumnProps[]>(props.columns);

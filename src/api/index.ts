@@ -6,6 +6,7 @@ import { ResultData } from "@/api/interface";
 import { ResultEnum } from "@/enums/httpEnum";
 import { checkStatus } from "./helper/checkStatus";
 import { AxiosCanceler } from "./helper/axiosCancel";
+import { setupRequestLogInterceptor, setupResponseLogInterceptor, setupRouterLogInterceptor } from "./helper/logInterceptor";
 import { useUserStore } from "@/stores/modules/user";
 import router from "@/routers";
 
@@ -116,4 +117,12 @@ class RequestHttp {
   }
 }
 
-export default new RequestHttp(config);
+// 初始化请求实例
+const requestInstance = new RequestHttp(config);
+
+// 设置日志拦截器
+setupRequestLogInterceptor(requestInstance.service);
+setupResponseLogInterceptor(requestInstance.service);
+setupRouterLogInterceptor();
+
+export default requestInstance;

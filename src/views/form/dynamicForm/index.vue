@@ -100,5 +100,5 @@ const resetForm = (formEl: FormInstance | undefined) => {
 </script>
 
 <style scoped lang="scss">
-@import "./index.scss";
+@import "./index";
 </style>

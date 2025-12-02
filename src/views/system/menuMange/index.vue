@@ -7,7 +7,7 @@
       </template>
       <!-- 菜单图标 -->
       <template #icon="scope">
-        <el-icon :size="18">
+        <el-icon size="18">
           <component :is="scope.row.meta.icon"></component>
         </el-icon>
       </template>

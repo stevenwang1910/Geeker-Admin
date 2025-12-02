@@ -88,3 +88,45 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// 部门管理模块
+export namespace Department {
+  export interface ReqDepartmentParams extends ReqPage {
+    name: string;
+    code: string;
+    type: number;
+    parentId: string;
+    createTime: string[];
+    status: number;
+  }
+  export interface ResDepartmentList {
+    id: string;
+    name: string;
+    code: string;
+    type: number;
+    parentId: string;
+    parentName: string;
+    createTime: string;
+    status: number;
+    sort: number;
+    children?: ResDepartmentList[];
+  }
+  export interface ReqAddDepartment {
+    name: string;
+    code: string;
+    type: number;
+    parentId: string;
+    sort: number;
+  }
+  export interface ReqEditDepartment extends ReqAddDepartment {
+    id: string;
+  }
+  export interface ResStatus {
+    label: string;
+    value: number;
+  }
+  export interface ResType {
+    label: string;
+    value: number;
+  }
+}

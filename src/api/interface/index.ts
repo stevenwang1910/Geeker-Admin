@@ -88,3 +88,65 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// 系统日志模块
+export namespace SystemLog {
+  // 日志级别类型
+  export type LogLevel = 'info' | 'warn' | 'error' | 'debug';
+  
+  // 操作类型
+  export type OperationType = 'login' | 'logout' | 'create' | 'update' | 'delete' | 'query' | 'export' | 'import';
+  
+  // 日志请求参数
+  export interface ReqLogParams extends ReqPage {
+    level?: LogLevel;
+    operationType?: OperationType;
+    userId?: string;
+    username?: string;
+    startTime?: string;
+    endTime?: string;
+    requestUrl?: string;
+  }
+  
+  // 日志响应数据
+  export interface ResLogList {
+    id: string;
+    level: LogLevel;
+    operationType: OperationType;
+    userId: string;
+    username: string;
+    requestUrl: string;
+    requestMethod: string;
+    requestParams?: Record<string, any>;
+    responseData?: Record<string, any>;
+    ipAddress: string;
+    userAgent: string;
+    operationTime: string;
+    executionTime?: number; // 执行时间(ms)
+    statusCode?: number;
+    errorMessage?: string;
+    module?: string; // 模块名称
+  }
+  
+  // 日志记录参数（用于服务端记录）
+  export interface ReqLogRecord {
+    level: LogLevel;
+    operationType: OperationType;
+    message: string;
+    userId?: string;
+    username?: string;
+    requestUrl?: string;
+    requestMethod?: string;
+    requestParams?: Record<string, any>;
+    responseData?: Record<string, any>;
+    ipAddress?: string;
+    userAgent?: string;
+    executionTime?: number;
+    statusCode?: number;
+    errorMessage?: string;
+    module?: string;
+  }
+}
+
+// 定时任务模块
+export * from './timingTask';

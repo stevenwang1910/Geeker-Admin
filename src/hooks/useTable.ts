@@ -1,5 +1,6 @@
 import { Table } from "./interface";
 import { reactive, computed, toRefs } from "vue";
+import type { DefaultRow } from "element-plus/es/components/table/src/table/defaults";
 
 /**
  * @description table 页面操作方法封装
@@ -8,16 +9,16 @@ import { reactive, computed, toRefs } from "vue";
  * @param {Boolean} isPageable 是否有分页 (非必传，默认为true)
  * @param {Function} dataCallBack 对后台返回的数据进行处理的方法 (非必传)
  * */
-export const useTable = (
-  api?: (params: any) => Promise<any>,
+export const useTable = <T extends DefaultRow = DefaultRow>(
+  api?: (params: any) => Promise<{ list: T[]; total: number } | T[]>,
   initParam: object = {},
   isPageable: boolean = true,
-  dataCallBack?: (data: any) => any,
+  dataCallBack?: (data: { list: T[]; total: number } | T[]) => { list: T[]; total: number } | T[],
   requestError?: (error: any) => void
 ) => {
-  const state = reactive<Table.StateProps>({
+  const state = reactive<Table.StateProps<T>>({
     // 表格数据
-    tableData: [],
+    tableData: [] as T[],
     // 分页数据
     pageable: {
       // 当前页数
@@ -54,20 +55,49 @@ export const useTable = (
    * @description 获取表格数据
    * @return void
    * */
-  const getTableList = async () => {
-    if (!api) return;
+  const getTableList = async (params?: any) => {
     try {
-      // 先把初始化参数和分页参数放到总参数里面
-      Object.assign(state.totalParam, initParam, isPageable ? pageParam.value : {});
-      let { data } = await api({ ...state.searchInitParam, ...state.totalParam });
-      dataCallBack && (data = dataCallBack(data));
-      state.tableData = isPageable ? data.list : data;
-      // 解构后台返回的分页数据 (如果有分页更新分页信息)
+      // 合并参数
+      const mergedParams = {
+        ...state.totalParam,
+        ...initParam,
+        ...params
+      };
+      // 如果有分页，添加分页参数
       if (isPageable) {
-        state.pageable.total = data.total;
+        mergedParams.pageNum = state.pageable.pageNum;
+        mergedParams.pageSize = state.pageable.pageSize;
+      }
+      // 调用API
+      const response = await api!(mergedParams);
+      // 如果有数据回调，处理数据
+      const processedData = dataCallBack ? dataCallBack(response) : response;
+      // 如果有分页，更新分页信息和表格数据
+      if (isPageable) {
+        if (Array.isArray(processedData)) {
+          // 如果是数组，直接使用
+          state.tableData = processedData as any[];
+          state.pageable.total = processedData.length;
+        } else {
+          // 如果是对象，使用list和total
+          state.pageable.total = processedData.total;
+          state.tableData = processedData.list as any[];
+        }
+      } else {
+        // 如果没有分页，直接更新表格数据
+        state.tableData = (Array.isArray(processedData) ? processedData : processedData.list) as any[];
+      }
+      // 如果有图标，更新图标
+      if (!Array.isArray(processedData) && (processedData as any).icon) {
+        state.icon = (processedData as any).icon;
       }
     } catch (error) {
-      requestError && requestError(error);
+      // 如果有错误回调，处理错误
+      if (requestError) {
+        requestError(error);
+      } else {
+        console.error("获取表格数据失败:", error);
+      }
     }
   };
 

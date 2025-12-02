@@ -44,6 +44,36 @@ export namespace Login {
   }
 }
 
+// 部门管理模块
+export namespace Department {
+  export interface ReqDepartmentParams extends ReqPage {
+    name: string;
+    code: string;
+    parentId: string;
+    createTime: string[];
+  }
+  export interface ResDepartmentList {
+    id: string;
+    name: string;
+    code: string;
+    parentId: string;
+    parentName: string;
+    createTime: string;
+    children?: ResDepartmentList[];
+  }
+  export interface ReqAddDepartment {
+    name: string;
+    code: string;
+    parentId?: string;
+  }
+  export interface ReqEditDepartment {
+    id: string;
+    name: string;
+    code: string;
+    parentId?: string;
+  }
+}
+
 // 用户管理模块
 export namespace User {
   export interface ReqUserParams extends ReqPage {

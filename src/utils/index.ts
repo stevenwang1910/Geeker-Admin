@@ -1,4 +1,43 @@
 import { isArray } from "@/utils/is";
+
+/**
+ * @description 格式化日期
+ * @param {Date | string | number} date 日期值
+ * @param {string} format 格式化字符串，默认为 'YYYY-MM-DD HH:mm:ss'
+ * @returns {string} 格式化后的日期字符串
+ */
+export function formatDate(date: Date | string | number, format: string = "YYYY-MM-DD HH:mm:ss"): string {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  const hours = String(d.getHours()).padStart(2, "0");
+  const minutes = String(d.getMinutes()).padStart(2, "0");
+  const seconds = String(d.getSeconds()).padStart(2, "0");
+
+  return format
+    .replace("YYYY", String(year))
+    .replace("MM", month)
+    .replace("DD", day)
+    .replace("HH", hours)
+    .replace("mm", minutes)
+    .replace("ss", seconds);
+}
+
+/**
+ * @description 计算两个日期之间的差值
+ * @param {Date | string | number} startDate 开始日期
+ * @param {Date | string | number} endDate 结束日期
+ * @returns {number} 两个日期之间的天数差值
+ */
+export function getDateDiff(startDate: Date | string | number, endDate: Date | string | number): number {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  const diffTime = Math.abs(end.getTime() - start.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+}
+
 import { FieldNamesProps } from "@/components/ProTable/interface";
 
 const mode = import.meta.env.VITE_ROUTER_MODE;

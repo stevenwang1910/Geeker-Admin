@@ -1,0 +1,154 @@
+.logistics-management {
+  padding: 20px;
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #303133;
+    }
+  }
+
+  .filter-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f5f7fa;
+    border-radius: 8px;
+
+    .select-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .select-filter-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .select-filter-item-title {
+          font-size: 14px;
+          font-weight: 500;
+          color: #606266;
+        }
+
+        .select-filter-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin: 0;
+          padding: 0;
+          list-style: none;
+
+          li {
+            padding: 4px 12px;
+            background: #fff;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #606266;
+            cursor: pointer;
+            transition: all 0.3s;
+
+            &:hover {
+              border-color: #409eff;
+              color: #409eff;
+            }
+
+            &.active {
+              background: #409eff;
+              border-color: #409eff;
+              color: #fff;
+            }
+
+            .el-icon {
+              margin-right: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .search-section {
+    margin-bottom: 20px;
+  }
+
+  .table-section {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+
+    .el-table {
+      --el-table-header-text-color: #606266;
+      --el-table-row-hover-bg-color: #f5f7fa;
+
+      .el-table__header {
+        th {
+          background: #fafafa;
+          font-weight: 600;
+        }
+      }
+
+      .el-table__body {
+        td {
+          font-size: 14px;
+          color: #303133;
+        }
+      }
+    }
+
+    .pagination-section {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .el-dialog {
+    .el-dialog__header {
+      background: #f5f7fa;
+      border-bottom: 1px solid #e4e7ed;
+      padding: 15px 20px;
+
+      .el-dialog__title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #303133;
+      }
+    }
+
+    .el-dialog__body {
+      padding: 20px;
+
+      .el-form {
+        .el-form-item {
+          margin-bottom: 15px;
+
+          .el-form-item__label {
+            font-size: 14px;
+            color: #606266;
+          }
+
+          .el-input,
+          .el-select,
+          .el-textarea {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .el-dialog__footer {
+      background: #f5f7fa;
+      border-top: 1px solid #e4e7ed;
+      padding: 15px 20px;
+      text-align: right;
+    }
+  }
+}

@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import Sortable from "sortablejs";
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, nextTick } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useGlobalStore } from "@/stores/modules/global";
 import { useTabsStore } from "@/stores/modules/tabs";
@@ -79,14 +79,20 @@ const initTabs = () => {
 
 // tabs 拖拽排序
 const tabsDrop = () => {
-  Sortable.create(document.querySelector(".el-tabs__nav") as HTMLElement, {
-    draggable: ".el-tabs__item",
-    animation: 300,
-    onEnd({ newIndex, oldIndex }) {
-      const tabsList = [...tabStore.tabsMenuList];
-      const currRow = tabsList.splice(oldIndex as number, 1)[0];
-      tabsList.splice(newIndex as number, 0, currRow);
-      tabStore.setTabs(tabsList);
+  // 确保DOM元素已经渲染完成
+  nextTick(() => {
+    const elTabsNav = document.querySelector(".el-tabs__nav") as HTMLElement;
+    if (elTabsNav) {
+      Sortable.create(elTabsNav, {
+        draggable: ".el-tabs__item",
+        animation: 300,
+        onEnd({ newIndex, oldIndex }) {
+          const tabsList = [...tabStore.tabsMenuList];
+          const currRow = tabsList.splice(oldIndex as number, 1)[0];
+          tabsList.splice(newIndex as number, 0, currRow);
+          tabStore.setTabs(tabsList);
+        }
+      });
     }
   });
 };

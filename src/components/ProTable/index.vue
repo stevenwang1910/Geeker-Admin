@@ -103,7 +103,7 @@
 </template>
 
 <script setup lang="ts" name="ProTable">
-import { ref, watch, provide, onMounted, unref, computed, reactive } from "vue";
+import { ref, watch, provide, onMounted, unref, computed, reactive, nextTick } from "vue";
 import { ElTable } from "element-plus";
 import { useTable } from "@/hooks/useTable";
 import { useSelection } from "@/hooks/useSelection";
@@ -285,14 +285,19 @@ const _reset = () => {
 
 // 表格拖拽排序
 const dragSort = () => {
-  const tbody = document.querySelector(`#${uuid.value} tbody`) as HTMLElement;
-  Sortable.create(tbody, {
-    handle: ".move",
-    animation: 300,
-    onEnd({ newIndex, oldIndex }) {
-      const [removedItem] = processTableData.value.splice(oldIndex!, 1);
-      processTableData.value.splice(newIndex!, 0, removedItem);
-      emit("dragSort", { newIndex, oldIndex });
+  // 确保DOM元素已经渲染完成
+  nextTick(() => {
+    const tbody = document.querySelector(`#${uuid.value} tbody`) as HTMLElement;
+    if (tbody) {
+      Sortable.create(tbody, {
+        handle: ".move",
+        animation: 300,
+        onEnd({ newIndex, oldIndex }) {
+          const [removedItem] = processTableData.value.splice(oldIndex!, 1);
+          processTableData.value.splice(newIndex!, 0, removedItem);
+          emit("dragSort", { newIndex, oldIndex });
+        }
+      });
     }
   });
 };

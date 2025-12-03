@@ -375,6 +375,20 @@
             "isAffix": false,
             "isKeepAlive": true
           }
+        },
+        {
+          "path": "/assembly/Logistics",
+          "name": "Logistics",
+          "component": "/assembly/Logistics/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "物流信息管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
         }
       ]
     },

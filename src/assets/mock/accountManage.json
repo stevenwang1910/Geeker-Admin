@@ -1,0 +1,76 @@
+{
+  "code": 200,
+  "msg": "成功",
+  "data": {
+    "list": [
+      {
+        "id": "1",
+        "username": "张三",
+        "gender": 1,
+        "user": { "detail": { "age": 25 } },
+        "idCard": "110101199501011234",
+        "email": "zhangsan@example.com",
+        "address": "北京市朝阳区",
+        "createTime": "2023-01-01 10:00:00",
+        "status": 1,
+        "avatar": "https://example.com/avatar1.jpg",
+        "photo": []
+      },
+      {
+        "id": "2",
+        "username": "李四",
+        "gender": 2,
+        "user": { "detail": { "age": 30 } },
+        "idCard": "110101199001011234",
+        "email": "lisi@example.com",
+        "address": "北京市海淀区",
+        "createTime": "2023-02-01 10:00:00",
+        "status": 1,
+        "avatar": "https://example.com/avatar2.jpg",
+        "photo": []
+      },
+      {
+        "id": "3",
+        "username": "王五",
+        "gender": 1,
+        "user": { "detail": { "age": 35 } },
+        "idCard": "110101198501011234",
+        "email": "wangwu@example.com",
+        "address": "北京市东城区",
+        "createTime": "2023-03-01 10:00:00",
+        "status": 0,
+        "avatar": "https://example.com/avatar3.jpg",
+        "photo": []
+      },
+      {
+        "id": "4",
+        "username": "赵六",
+        "gender": 2,
+        "user": { "detail": { "age": 40 } },
+        "idCard": "110101198001011234",
+        "email": "zhaoliu@example.com",
+        "address": "北京市西城区",
+        "createTime": "2023-04-01 10:00:00",
+        "status": 1,
+        "avatar": "https://example.com/avatar4.jpg",
+        "photo": []
+      },
+      {
+        "id": "5",
+        "username": "孙七",
+        "gender": 1,
+        "user": { "detail": { "age": 45 } },
+        "idCard": "110101197501011234",
+        "email": "sunqi@example.com",
+        "address": "北京市丰台区",
+        "createTime": "2023-05-01 10:00:00",
+        "status": 1,
+        "avatar": "https://example.com/avatar5.jpg",
+        "photo": []
+      }
+    ],
+    "pageNum": 1,
+    "pageSize": 10,
+    "total": 5
+  }
+}

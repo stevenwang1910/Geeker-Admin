@@ -84,4 +84,6 @@ export interface ColumnProps<T = any> extends Partial<
   _children?: ColumnProps<T>[]; // 多级表头
 }
 
-export type ProTableInstance = Omit<InstanceType<typeof ProTable>, keyof ComponentPublicInstance | keyof ProTableProps>;
+export interface ProTableInstance extends Omit<InstanceType<typeof ProTable>, keyof ComponentPublicInstance | keyof ProTableProps> {
+  refresh: () => Promise<void>;
+}

@@ -16,6 +16,20 @@
       }
     },
     {
+      "path": "/demo",
+      "name": "demo",
+      "component": "/demo/index",
+      "meta": {
+        "icon": "Example",
+        "title": "Demo页面",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
       "path": "/dataScreen",
       "name": "dataScreen",
       "component": "/dataScreen/index",

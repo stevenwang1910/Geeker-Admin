@@ -1,6 +1,6 @@
 export namespace Table {
   export interface Pageable {
-    pageNum: number;
+    page: number;
     pageSize: number;
     total: number;
   }

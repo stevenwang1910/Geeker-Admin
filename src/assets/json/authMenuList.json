@@ -293,6 +293,20 @@
           }
         },
         {
+          "path": "/assembly/logistics",
+          "name": "logistics",
+          "component": "/assembly/logistics/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "物流信息管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
           "path": "/assembly/treeFilter",
           "name": "treeFilter",
           "component": "/assembly/treeFilter/index",

@@ -88,3 +88,42 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// 商品管理模块
+export namespace Goods {
+  export interface ReqGoodsList extends ReqPage {
+    name?: string;
+    category?: string;
+    status?: string;
+  }
+  export interface ResGoodsList extends ResPage<ResGoodsItem> {}
+  export interface ResGoodsItem {
+    id: string;
+    name: string;
+    category: string;
+    price: number;
+    stock: number;
+    status: string;
+    createTime: string;
+    updateTime: string;
+    description: string;
+    specs: ResGoodsSpec[];
+    images: string[];
+  }
+  export interface ResGoodsSpec {
+    name: string;
+    value: string;
+  }
+  export interface ReqUpdateGoods {
+    id: string;
+    name: string;
+    category: string;
+    price: number;
+    stock: number;
+    status: string;
+    description: string;
+    specs: ResGoodsSpec[];
+    images: string[];
+  }
+  export interface ResGoodsDetail extends ResGoodsItem {}
+}

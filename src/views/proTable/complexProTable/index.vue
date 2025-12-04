@@ -39,6 +39,7 @@
 <script setup lang="tsx" name="complexProTable">
 import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
+import type { DefaultRow } from "element-plus/es/components/table/src/table/defaults";
 import { User } from "@/api/interface";
 import { useHandleData } from "@/hooks/useHandleData";
 import ProTable from "@/components/ProTable/index.vue";
@@ -102,12 +103,12 @@ const columns = reactive<ColumnProps<User.ResUserList>[]>([
 
 // 选择行
 const setCurrent = () => {
-  proTable.value?.element?.setCurrentRow(proTable.value?.tableData[4]);
-  proTable.value?.element?.toggleRowSelection(proTable.value?.tableData[4], true);
+  proTable.value?.element?.setCurrentRow(proTable.value?.tableData[4] || null);
+  proTable.value?.element?.toggleRowSelection(proTable.value?.tableData[4] || null, true);
 };
 
 // 表尾合计行（自行根据条件计算）
-interface SummaryMethodProps<T = User.ResUserList> {
+interface SummaryMethodProps<T extends DefaultRow = User.ResUserList> {
   columns: TableColumnCtx<T>[];
   data: T[];
 }

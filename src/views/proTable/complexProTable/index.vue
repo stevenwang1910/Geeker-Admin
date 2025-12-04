@@ -51,7 +51,7 @@ import { getUserList, deleteUser, resetUserPassWord, getUserStatus, getUserGende
 const proTable = ref<ProTableInstance>();
 
 // 自定义渲染表头（使用tsx语法）
-const headerRender = (scope: HeaderRenderScope<User.ResUserList>) => {
+const headerRender = (scope: HeaderRenderScope) => {
   return (
     <el-button type="primary" onClick={() => ElMessage.success("我是通过 tsx 语法渲染的表头")}>
       {scope.column.label}
@@ -108,7 +108,7 @@ const setCurrent = () => {
 
 // 表尾合计行（自行根据条件计算）
 interface SummaryMethodProps<T = User.ResUserList> {
-  columns: TableColumnCtx<T>[];
+  columns: any[];
   data: T[];
 }
 const getSummaries = (param: SummaryMethodProps) => {

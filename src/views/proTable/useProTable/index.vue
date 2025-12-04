@@ -54,7 +54,7 @@ import { User } from "@/api/interface";
 import { useHandleData } from "@/hooks/useHandleData";
 import { useDownload } from "@/hooks/useDownload";
 import { useAuthButtons } from "@/hooks/useAuthButtons";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage } from "element-plus";
 import ProTable from "@/components/ProTable/index.vue";
 import ImportExcel from "@/components/ImportExcel/index.vue";
 import UserDrawer from "@/views/proTable/components/UserDrawer.vue";
@@ -109,7 +109,7 @@ const getTableList = (params: any) => {
 const { BUTTONS } = useAuthButtons();
 
 // 自定义渲染表头（使用tsx语法）
-const headerRender = (scope: HeaderRenderScope<User.ResUserList>) => {
+const headerRender = (scope: HeaderRenderScope) => {
   return (
     <el-button type="primary" onClick={() => ElMessage.success("我是通过 tsx 语法渲染的表头")}>
       {scope.column.label}
@@ -238,10 +238,88 @@ const changeStatus = async (row: User.ResUserList) => {
 };
 
 // 导出用户列表
+import { useFrontendDownload, showDetailedExportDialog, ExportParams } from "@/hooks/useDownload";
+
 const downloadFile = async () => {
-  ElMessageBox.confirm("确认导出用户数据?", "温馨提示", { type: "warning" }).then(() =>
-    useDownload(exportUserInfo, "用户列表", proTable.value?.searchParam)
-  );
+  showDetailedExportDialog("用户列表", proTable.value?.isSelected || false, columns, handleExportConfirm);
+};
+
+// 导出确认
+const handleExportConfirm = async (exportParams: ExportParams) => {
+  const { type, format = "xlsx", columns = [] } = exportParams;
+
+  switch (type) {
+    case "current":
+      await exportCurrentPage(format, columns);
+      break;
+    case "selected":
+      await exportSelected(format, columns);
+      break;
+    case "all":
+      await exportAll(format, columns);
+      break;
+    default:
+      ElMessage.warning("不支持的导出类型");
+  }
+};
+
+// 导出当前页数据
+const exportCurrentPage = async (format: string, selectedColumns: any[]) => {
+  try {
+    const currentData = proTable.value?.tableData || [];
+    // 前端导出
+    await useFrontendDownload("用户列表_当前页", {
+      type: "current",
+      format: format as any,
+      currentData: currentData,
+      columns: selectedColumns
+    });
+  } catch (error) {
+    console.error("导出当前页失败:", error);
+  }
+};
+
+// 导出选中数据
+const exportSelected = async (format: string, selectedColumns: any[]) => {
+  try {
+    const selectedData = proTable.value?.selectedList || [];
+    if (selectedData.length === 0) {
+      ElMessage.warning("请先选择要导出的数据！");
+      return;
+    }
+    // 前端导出
+    await useFrontendDownload("用户列表_选中", {
+      type: "selected",
+      format: format as any,
+      selectedData: selectedData,
+      columns: selectedColumns
+    });
+  } catch (error) {
+    console.error("导出选中数据失败:", error);
+  }
+};
+
+// 导出全部数据
+const exportAll = async (format: string, columns: any[]) => {
+  try {
+    // 后端导出（支持全量数据）
+    const params = {
+      ...(proTable.value?.searchParam || {}),
+      format: format, // 传递格式参数给后端
+      columns: columns.map(col => col.prop).join(",") // 传递选中的列给后端
+    };
+
+    // 根据格式设置文件名和类型
+    const fileTypeMap: Record<string, string> = {
+      xlsx: ".xlsx",
+      csv: ".csv",
+      pdf: ".pdf"
+    };
+
+    await useDownload(exportUserInfo, "用户列表_全部", params, true, fileTypeMap[format] || ".xlsx");
+  } catch (error) {
+    console.error("导出全部数据失败:", error);
+  }
 };
 
 // 批量添加用户

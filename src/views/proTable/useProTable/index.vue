@@ -11,8 +11,10 @@
       <!-- 表格 header 按钮 -->
       <template #tableHeader="scope">
         <el-button v-auth="'add'" type="primary" :icon="CirclePlus" @click="openDrawer('新增')">新增用户</el-button>
-        <el-button v-auth="'batchAdd'" type="primary" :icon="Upload" plain @click="batchAdd">批量添加用户</el-button>
-        <el-button v-auth="'export'" type="primary" :icon="Download" plain @click="downloadFile">导出用户数据</el-button>
+        <el-button v-auth="'batchAdd'" type="primary" :icon="Upload" plain @click="openImportDialog">批量导入用户</el-button>
+        <el-button v-auth="'export'" type="primary" :icon="Download" plain @click="openExportDialog(scope.selectedListIds)">
+          导出用户数据
+        </el-button>
         <el-button type="primary" plain @click="toDetail">To 子集详情页面</el-button>
         <el-button type="danger" :icon="Delete" plain :disabled="!scope.isSelected" @click="batchDelete(scope.selectedListIds)">
           批量删除用户
@@ -43,7 +45,7 @@
       </template>
     </ProTable>
     <UserDrawer ref="drawerRef" />
-    <ImportExcel ref="dialogRef" />
+    <DataImportExport ref="importExportRef" />
   </div>
 </template>
 
@@ -52,11 +54,10 @@ import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { User } from "@/api/interface";
 import { useHandleData } from "@/hooks/useHandleData";
-import { useDownload } from "@/hooks/useDownload";
 import { useAuthButtons } from "@/hooks/useAuthButtons";
-import { ElMessage, ElMessageBox } from "element-plus";
+import { ElMessage } from "element-plus";
 import ProTable from "@/components/ProTable/index.vue";
-import ImportExcel from "@/components/ImportExcel/index.vue";
+import DataImportExport from "@/components/DataImportExport/index.vue";
 import UserDrawer from "@/views/proTable/components/UserDrawer.vue";
 import { ProTableInstance, ColumnProps, HeaderRenderScope } from "@/components/ProTable/interface";
 import { CirclePlus, Delete, EditPen, Download, Upload, View, Refresh } from "@element-plus/icons-vue";
@@ -80,8 +81,37 @@ const toDetail = () => {
   router.push(`/proTable/useProTable/detail/${Math.random().toFixed(3)}?params=detail-page`);
 };
 
+// 打开导入弹窗
+const openImportDialog = () => {
+  importExportRef.value?.openImportDialog({
+    title: "用户",
+    hasTemplate: false,
+    importApi: BatchAddUser,
+    allowMultiple: false,
+    maxFileSize: 10,
+    acceptFileTypes: ["application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"],
+    onImportSuccess: () => {
+      // 导入成功后刷新表格
+      proTable.value?.getTableList();
+    }
+  });
+};
+
+// 打开导出弹窗
+const openExportDialog = (selectedIds: string[]) => {
+  importExportRef.value?.openExportDialog({
+    exportApi: exportUserInfo,
+    currentPageParams: proTable.value?.searchParam,
+    selectedRowIds: selectedIds,
+    onExportSuccess: () => {
+      ElMessage.success("数据导出成功！");
+    }
+  });
+};
+
 // ProTable 实例
 const proTable = ref<ProTableInstance>();
+const importExportRef = ref<InstanceType<typeof DataImportExport>>();
 
 // 如果表格需要初始化请求参数，直接定义传给 ProTable (之后每次请求都会自动带上该参数，此参数更改之后也会一直带上，改变此参数会自动刷新表格数据)
 const initParam = reactive({ type: 1 });
@@ -235,25 +265,6 @@ const resetPass = async (params: User.ResUserList) => {
 const changeStatus = async (row: User.ResUserList) => {
   await useHandleData(changeUserStatus, { id: row.id, status: row.status == 1 ? 0 : 1 }, `切换【${row.username}】用户状态`);
   proTable.value?.getTableList();
-};
-
-// 导出用户列表
-const downloadFile = async () => {
-  ElMessageBox.confirm("确认导出用户数据?", "温馨提示", { type: "warning" }).then(() =>
-    useDownload(exportUserInfo, "用户列表", proTable.value?.searchParam)
-  );
-};
-
-// 批量添加用户
-const dialogRef = ref<InstanceType<typeof ImportExcel> | null>(null);
-const batchAdd = () => {
-  const params = {
-    title: "用户",
-    tempApi: exportUserInfo,
-    importApi: BatchAddUser,
-    getTableList: proTable.value?.getTableList
-  };
-  dialogRef.value?.acceptParams(params);
 };
 
 // 打开 drawer(新增、查看、编辑)

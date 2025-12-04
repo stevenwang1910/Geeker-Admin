@@ -28,6 +28,7 @@
             circle
             @click="isShowSearch = !isShowSearch"
           />
+          <PrintButton v-if="showToolButton('print')" :table-data="processTableData" :columns="tableColumns" :list="props.list" />
         </slot>
       </div>
     </div>
@@ -115,6 +116,7 @@ import SearchForm from "@/components/SearchForm/index.vue";
 import Pagination from "./components/Pagination.vue";
 import ColSetting from "./components/ColSetting.vue";
 import TableColumn from "./components/TableColumn.vue";
+import PrintButton from "./components/PrintButton.vue";
 import Sortable from "sortablejs";
 
 export interface ProTableProps {
@@ -128,9 +130,10 @@ export interface ProTableProps {
   pagination?: boolean; // 是否需要分页组件 ==> 非必传（默认为true）
   initParam?: any; // 初始化请求参数 ==> 非必传（默认为{}）
   border?: boolean; // 是否带有纵向边框 ==> 非必传（默认为true）
-  toolButton?: ("refresh" | "setting" | "search")[] | boolean; // 是否显示表格功能按钮 ==> 非必传（默认为true）
+  toolButton?: ("refresh" | "setting" | "search" | "print")[] | boolean; // 是否显示表格功能按钮 ==> 非必传（默认为true）
   rowKey?: string; // 行数据的 Key，用来优化 Table 的渲染，当表格数据多选时，所指定的 id ==> 非必传（默认为 id）
   searchCol?: number | Record<BreakPoint, number>; // 表格搜索项 每列占比配置 ==> 非必传 { xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }
+  list?: any[]; // 导出和打印预览的数据 ==> 非必传
 }
 
 // 接受父组件参数，配置默认值
@@ -142,7 +145,8 @@ const props = withDefaults(defineProps<ProTableProps>(), {
   border: true,
   toolButton: true,
   rowKey: "id",
-  searchCol: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 })
+  searchCol: () => ({ xs: 1, sm: 2, md: 2, lg: 3, xl: 4 }),
+  list: () => []
 });
 
 // table 实例

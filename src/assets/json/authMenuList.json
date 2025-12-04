@@ -375,6 +375,20 @@
             "isAffix": false,
             "isKeepAlive": true
           }
+        },
+        {
+          "path": "/assembly/goods",
+          "name": "goods",
+          "component": "/assembly/goods/index",
+          "meta": {
+            "icon": "ShoppingCart",
+            "title": "商品列表",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
         }
       ]
     },

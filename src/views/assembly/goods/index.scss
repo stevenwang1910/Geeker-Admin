@@ -1,0 +1,109 @@
+.goods-list-container {
+  padding: 20px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.goods-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.goods-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: move;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .goods-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  .goods-info {
+    padding: 15px;
+
+    .goods-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .goods-description {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 12px;
+      line-height: 1.5;
+      height: 42px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .goods-price {
+      font-size: 20px;
+      font-weight: 600;
+      color: #f56c6c;
+      margin-bottom: 8px;
+    }
+
+    .goods-stock {
+      font-size: 14px;
+      color: #999;
+    }
+  }
+}
+
+// 拖拽时的视觉反馈
+.chosen {
+  box-shadow: 0 0 0 2px #409eff !important;
+  transform: scale(1.02);
+}
+
+.ghost {
+  opacity: 0.5;
+  background: #f0f9ff;
+  border: 2px dashed #409eff;
+}
+
+.drag {
+  opacity: 0.8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.drag-hint {
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+  padding: 10px;
+  background: #f5f7fa;
+  border-radius: 4px;
+}

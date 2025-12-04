@@ -10,6 +10,7 @@
       :span-method="objectSpanMethod"
       :show-summary="true"
       :summary-method="getSummaries"
+      :tool-button="['refresh', 'setting', 'search', 'print']"
       @row-click="rowClick"
     >
       <!-- 表格 header 按钮 -->

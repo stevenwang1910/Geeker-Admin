@@ -202,36 +202,36 @@ const handlePrintExportCommand = async (command: string) => {
 
 // 打印预览
 const handlePrintPreview = () => {
-  // 创建新窗口
-  const printWindow = window.open("", "_blank");
-  if (!printWindow) {
-    ElMessage.error("无法打开打印预览窗口，请检查浏览器设置");
+  // 获取表格数据
+  const tableData = tableRef.value?.tableData || [];
+  if (tableData.length === 0) {
+    ElMessage.error("暂无数据可打印");
     return;
   }
 
-  // 获取表格数据
-  const tableData = tableRef.value?.tableData || [];
-  if (tableData.length > 0) {
-    const tableHTML = generatePrintContent(tableData);
-    printWindow.document.body.innerHTML = `
-        <div class="print-container">
-          <h2 class="print-title">用户列表</h2>
-          <div class="print-table">${tableHTML}</div>
-        </div>
-      `;
-  } else {
-    printWindow.document.body.innerHTML = `
-        <div class="print-container">
-          <h2 class="print-title">用户列表</h2>
-          <div class="print-empty">暂无数据</div>
-        </div>
-      `;
-  }
+  // 创建打印区域
+  const printContent = document.createElement("div");
+  printContent.className = "print-container";
+  printContent.innerHTML = `
+    <h2 class="print-title">用户列表</h2>
+    <div class="print-table">${generatePrintContent(tableData)}</div>
+  `;
 
   // 添加打印样式
-  const style = printWindow.document.createElement("style");
+  const style = document.createElement("style");
   style.textContent = `
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      .print-container, .print-container * {
+        visibility: visible;
+      }
       .print-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
         padding: 20px;
         font-family: Arial, sans-serif;
       }
@@ -259,17 +259,8 @@ const handlePrintPreview = () => {
       .print-table tr:nth-child(even) {
         background-color: #f9f9f9;
       }
-      .print-empty {
-        text-align: center;
-        padding: 50px;
-        color: #999;
-        font-size: 18px;
-      }
       /* 水印样式 */
-      body {
-        position: relative;
-      }
-      body::before {
+      .print-container::before {
         content: '';
         position: fixed;
         top: 0;
@@ -283,13 +274,19 @@ const handlePrintPreview = () => {
         z-index: -1;
         pointer-events: none;
       }
-    `;
-  printWindow.document.head.appendChild(style);
+    }
+  `;
+  printContent.appendChild(style);
 
-  // 等待页面加载完成后打印
-  printWindow.onload = () => {
-    printWindow.print();
-  };
+  // 将打印区域添加到页面
+  document.body.appendChild(printContent);
+
+  // 执行打印
+  setTimeout(() => {
+    window.print();
+    // 打印完成后移除打印区域
+    document.body.removeChild(printContent);
+  }, 100);
 };
 
 // 生成打印内容
@@ -385,6 +382,14 @@ const generateWatermark = () => {
 // 导出Excel
 const handleExportExcel = async () => {
   try {
+    // 获取表格数据
+    const tableData = tableRef.value?.tableData || [];
+    if (tableData.length === 0) {
+      ElMessage.error("暂无数据可导出");
+      return;
+    }
+
+    // 使用useDownload钩子导出数据
     await useDownload(exportUserInfo, "用户列表", tableRef.value?.searchParam);
     ElMessage.success("Excel导出成功");
   } catch (error) {
@@ -396,6 +401,14 @@ const handleExportExcel = async () => {
 // 导出CSV
 const handleExportCsv = async () => {
   try {
+    // 获取表格数据
+    const tableData = tableRef.value?.tableData || [];
+    if (tableData.length === 0) {
+      ElMessage.error("暂无数据可导出");
+      return;
+    }
+
+    // 使用useDownload钩子导出数据
     await useDownload(exportUserInfo, "用户列表", tableRef.value?.searchParam, true, ".csv");
     ElMessage.success("CSV导出成功");
   } catch (error) {

@@ -1,7 +1,7 @@
 <template>
   <div class="table-box">
     <ProTable
-      ref="proTable"
+      ref="tableRef"
       title="用户列表"
       highlight-current-row
       :columns="columns"
@@ -19,6 +19,20 @@
         <el-button type="danger" :icon="Delete" plain :disabled="!scope.isSelected" @click="batchDelete(scope.selectedListIds)">
           批量删除用户
         </el-button>
+        <!-- 打印/导出下拉按钮 -->
+        <el-dropdown trigger="click" @command="handlePrintExportCommand">
+          <el-button type="info" :icon="Printer">
+            打印/导出
+            <el-icon class="el-icon--right"><ArrowDown /></el-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="preview" :icon="View">打印预览</el-dropdown-item>
+              <el-dropdown-item command="exportExcel" :icon="Download">导出Excel</el-dropdown-item>
+              <el-dropdown-item command="exportCsv" :icon="Document">导出CSV</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </template>
       <!-- Expand -->
       <template #expand="scope">
@@ -41,14 +55,15 @@ import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import { User } from "@/api/interface";
 import { useHandleData } from "@/hooks/useHandleData";
+import { useDownload } from "@/hooks/useDownload";
 import ProTable from "@/components/ProTable/index.vue";
-import { CirclePlus, Pointer, Delete, Refresh } from "@element-plus/icons-vue";
+import { CirclePlus, Pointer, Delete, Refresh, Printer, ArrowDown, View, Download, Document } from "@element-plus/icons-vue";
 import type { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { ProTableInstance, ColumnProps, HeaderRenderScope } from "@/components/ProTable/interface";
-import { getUserList, deleteUser, resetUserPassWord, getUserStatus, getUserGender } from "@/api/modules/user";
+import { getUserList, deleteUser, resetUserPassWord, getUserStatus, getUserGender, exportUserInfo } from "@/api/modules/user";
 
 // ProTable 实例
-const proTable = ref<ProTableInstance>();
+const tableRef = ref<ProTableInstance>();
 
 // 自定义渲染表头（使用tsx语法）
 const headerRender = (scope: HeaderRenderScope<User.ResUserList>) => {
@@ -102,8 +117,8 @@ const columns = reactive<ColumnProps<User.ResUserList>[]>([
 
 // 选择行
 const setCurrent = () => {
-  proTable.value?.element?.setCurrentRow(proTable.value?.tableData[4]);
-  proTable.value?.element?.toggleRowSelection(proTable.value?.tableData[4], true);
+  tableRef.value?.element?.setCurrentRow(tableRef.value?.tableData[4]);
+  tableRef.value?.element?.toggleRowSelection(tableRef.value?.tableData[4], true);
 };
 
 // 表尾合计行（自行根据条件计算）
@@ -152,20 +167,241 @@ const rowClick = (row: User.ResUserList, column: TableColumnCtx<User.ResUserList
 // 删除用户信息
 const deleteAccount = async (params: User.ResUserList) => {
   await useHandleData(deleteUser, { id: [params.id] }, `删除【${params.username}】用户`);
-  proTable.value?.getTableList();
+  tableRef.value?.getTableList();
 };
 
 // 批量删除用户信息
 const batchDelete = async (id: string[]) => {
   await useHandleData(deleteUser, { id }, "删除所选用户信息");
-  proTable.value?.clearSelection();
-  proTable.value?.getTableList();
+  tableRef.value?.clearSelection();
+  tableRef.value?.getTableList();
 };
 
 // 重置用户密码
 const resetPass = async (params: User.ResUserList) => {
   await useHandleData(resetUserPassWord, { id: params.id }, `重置【${params.username}】用户密码`);
-  proTable.value?.getTableList();
+  tableRef.value?.getTableList();
+};
+
+// 处理打印/导出命令
+const handlePrintExportCommand = async (command: string) => {
+  switch (command) {
+    case "preview":
+      handlePrintPreview();
+      break;
+    case "exportExcel":
+      await handleExportExcel();
+      break;
+    case "exportCsv":
+      await handleExportCsv();
+      break;
+    default:
+      break;
+  }
+};
+
+// 打印预览
+const handlePrintPreview = () => {
+  // 创建新窗口
+  const printWindow = window.open("", "_blank");
+  if (!printWindow) {
+    ElMessage.error("无法打开打印预览窗口，请检查浏览器设置");
+    return;
+  }
+
+  // 获取表格数据
+  const tableData = tableRef.value?.tableData || [];
+  if (tableData.length > 0) {
+    const tableHTML = generatePrintContent(tableData);
+    printWindow.document.body.innerHTML = `
+        <div class="print-container">
+          <h2 class="print-title">用户列表</h2>
+          <div class="print-table">${tableHTML}</div>
+        </div>
+      `;
+  } else {
+    printWindow.document.body.innerHTML = `
+        <div class="print-container">
+          <h2 class="print-title">用户列表</h2>
+          <div class="print-empty">暂无数据</div>
+        </div>
+      `;
+  }
+
+  // 添加打印样式
+  const style = printWindow.document.createElement("style");
+  style.textContent = `
+      .print-container {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+      }
+      .print-title {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .print-table table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+      .print-table th,
+      .print-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      .print-table th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+      }
+      .print-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+      .print-empty {
+        text-align: center;
+        padding: 50px;
+        color: #999;
+        font-size: 18px;
+      }
+      /* 水印样式 */
+      body {
+        position: relative;
+      }
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(${generateWatermark()});
+        background-repeat: repeat;
+        background-size: 300px 300px;
+        opacity: 0.1;
+        z-index: -1;
+        pointer-events: none;
+      }
+    `;
+  printWindow.document.head.appendChild(style);
+
+  // 等待页面加载完成后打印
+  printWindow.onload = () => {
+    printWindow.print();
+  };
+};
+
+// 生成打印内容
+const generatePrintContent = (tableData: any[]) => {
+  // 递归获取所有可见列（排除选择列、索引列、展开列和操作列）
+  const getVisibleColumns = (columns: ColumnProps<User.ResUserList>[]): ColumnProps<User.ResUserList>[] => {
+    let visibleColumns: ColumnProps<User.ResUserList>[] = [];
+    for (const column of columns) {
+      if (column._children && column._children.length > 0) {
+        // 如果有子列，递归获取子列
+        visibleColumns = visibleColumns.concat(getVisibleColumns(column._children));
+      } else if (!["selection", "index", "expand", "operation"].includes(column.type || column.prop)) {
+        // 如果没有子列，且不是需要排除的列，添加到可见列
+        visibleColumns.push(column);
+      }
+    }
+    return visibleColumns;
+  };
+
+  const visibleColumns = getVisibleColumns(columns);
+  const enumMap = tableRef.value?.enumMap?.value || new Map();
+
+  // 生成表头
+  const thead = `
+    <thead>
+      <tr>
+        ${visibleColumns.map(column => `<th>${column.label}</th>`).join("")}
+      </tr>
+    </thead>
+  `;
+
+  // 生成表体
+  const tbody = `
+    <tbody>
+      ${tableData
+        .map(
+          row => `
+        <tr>
+          ${visibleColumns
+            .map(column => {
+              let value = row[column.prop!];
+              // 处理枚举值
+              if (column.enum && enumMap.has(column.prop!)) {
+                const enumData = enumMap.get(column.prop!);
+                const fieldNames = column.fieldNames || { label: "label", value: "value" };
+                const enumItem = enumData?.find((item: any) => item[fieldNames.value] === value);
+                value = enumItem ? enumItem[fieldNames.label] : value;
+              }
+              // 处理嵌套属性
+              if (column.prop!.includes(".")) {
+                const props = column.prop!.split(".");
+                value = props.reduce((acc, prop) => acc && acc[prop], row);
+              }
+              return `<td>${value || "-"}</td>`;
+            })
+            .join("")}
+        </tr>
+      `
+        )
+        .join("")}
+    </tbody>
+  `;
+
+  // 生成表格
+  return `
+    <h1>用户列表</h1>
+    <table>
+      ${thead}
+      ${tbody}
+    </table>
+  `;
+};
+
+// 生成水印
+const generateWatermark = () => {
+  const canvas = document.createElement("canvas");
+  canvas.width = 205;
+  canvas.height = 140;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return "";
+
+  ctx.rotate((-20 * Math.PI) / 180);
+  ctx.font = "16px Microsoft JhengHei";
+  ctx.fillStyle = "rgba(180, 180, 180, 0.3)";
+  ctx.textAlign = "left";
+  ctx.textBaseline = "middle" as CanvasTextBaseline;
+  ctx.fillText("Geeker-Admin", canvas.width / 10, canvas.height / 2);
+  ctx.fillText("版权所有", canvas.width / 10, canvas.height / 2 + 20);
+
+  return canvas.toDataURL("image/png");
+};
+
+// 导出Excel
+const handleExportExcel = async () => {
+  try {
+    await useDownload(exportUserInfo, "用户列表", tableRef.value?.searchParam);
+    ElMessage.success("Excel导出成功");
+  } catch (error) {
+    ElMessage.error("Excel导出失败");
+    console.error(error);
+  }
+};
+
+// 导出CSV
+const handleExportCsv = async () => {
+  try {
+    await useDownload(exportUserInfo, "用户列表", tableRef.value?.searchParam, true, ".csv");
+    ElMessage.success("CSV导出成功");
+  } catch (error) {
+    ElMessage.error("CSV导出失败");
+    console.error(error);
+  }
 };
 </script>
 

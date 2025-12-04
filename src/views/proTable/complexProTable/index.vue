@@ -19,6 +19,22 @@
         <el-button type="danger" :icon="Delete" plain :disabled="!scope.isSelected" @click="batchDelete(scope.selectedListIds)">
           批量删除用户
         </el-button>
+        <!-- 打印/导出下拉按钮 -->
+        <el-dropdown @command="handlePrintCommand">
+          <el-button type="primary" plain>
+            <Printer style="margin-right: 5px"></Printer>
+            打印/导出
+            <el-icon class="el-icon--right"> <ArrowDown /></el-icon>
+          </el-button>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="preview" :icon="Printer"> 打印预览 </el-dropdown-item>
+
+              <el-dropdown-item command="exportExcel" :icon="Download"> 导出Excel </el-dropdown-item>
+              <el-dropdown-item command="exportCsv" :icon="Download"> 导出CSV </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </template>
       <!-- Expand -->
       <template #expand="scope">
@@ -42,7 +58,9 @@ import { ElMessage } from "element-plus";
 import { User } from "@/api/interface";
 import { useHandleData } from "@/hooks/useHandleData";
 import ProTable from "@/components/ProTable/index.vue";
-import { CirclePlus, Pointer, Delete, Refresh } from "@element-plus/icons-vue";
+import { CirclePlus, Pointer, Delete, Refresh, Download, Printer, ArrowDown } from "@element-plus/icons-vue";
+import { useDownload } from "@/hooks/useDownload";
+import { exportUserInfo } from "@/api/modules/user";
 import type { TableColumnCtx } from "element-plus/es/components/table/src/table-column/defaults";
 import { ProTableInstance, ColumnProps, HeaderRenderScope } from "@/components/ProTable/interface";
 import { getUserList, deleteUser, resetUserPassWord, getUserStatus, getUserGender } from "@/api/modules/user";
@@ -160,6 +178,145 @@ const batchDelete = async (id: string[]) => {
   await useHandleData(deleteUser, { id }, "删除所选用户信息");
   proTable.value?.clearSelection();
   proTable.value?.getTableList();
+};
+
+// 处理打印/导出命令
+const handlePrintCommand = (command: string) => {
+  switch (command) {
+    case "preview":
+      handlePrintPreview();
+      break;
+    case "exportExcel":
+      handleExportExcel();
+      break;
+    case "exportCsv":
+      handleExportCsv();
+      break;
+    default:
+      break;
+  }
+};
+
+// 打印预览
+const handlePrintPreview = () => {
+  // 创建打印内容容器
+  const printContainer = document.createElement("div");
+  printContainer.id = "print-container";
+
+  // 获取表格元素并克隆
+  const tableElement = document.querySelector(".el-table");
+  if (tableElement) {
+    const clonedTable = tableElement.cloneNode(true);
+    printContainer.appendChild(clonedTable);
+  }
+
+  // 添加打印样式
+  const printStyle = document.createElement("style");
+  printStyle.textContent = `
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-container, #print-container * {
+        visibility: visible;
+      }
+      #print-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .el-table {
+        width: 100% !important;
+        border-collapse: collapse;
+      }
+      .el-table th,
+      .el-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      .el-table th {
+        background-color: #f5f5f5;
+        font-weight: bold;
+      }
+    }
+  `;
+
+  // 将打印容器和样式添加到页面
+  document.body.appendChild(printContainer);
+  document.head.appendChild(printStyle);
+
+  // 打开打印预览
+  window.print();
+
+  // 打印完成后移除打印容器和样式
+  setTimeout(() => {
+    const container = document.getElementById("print-container");
+    if (container) container.remove();
+    printStyle.remove();
+  }, 100);
+};
+
+// 导出Excel
+const handleExportExcel = () => {
+  // 由于安装 xlsx 库遇到问题，暂时将 Excel 导出功能重定向到 CSV 导出
+  handleExportCsv();
+};
+
+// 导出CSV
+const handleExportCsv = () => {
+  // 使用 ProTable 组件中保存的真实表格数据进行导出
+  const tableData = proTable.value?.tableData.value || [];
+  if (tableData.length === 0) {
+    ElMessage.warning("当前表格中没有数据可导出");
+    return;
+  }
+
+  // 将表格数据转换为 CSV 格式并下载
+  const exportData = tableData.map((row: any) => ({
+    username: row.base?.username || row.username || "",
+    age: row.user?.detail?.age || row.age || "",
+    gender: row.gender || "",
+    idCard: row.details?.idCard || row.idCard || "",
+    email: row.details?.email || row.email || "",
+    address: row.details?.address || row.address || "",
+    status: row.status || "",
+    createTime: row.createTime || ""
+  }));
+
+  // 生成 CSV 内容
+  const headers = Object.keys(exportData[0]);
+  const csvRows = [headers.join(",")];
+
+  exportData.forEach((row: any) => {
+    const values = headers.map(header => {
+      const value = row[header];
+      // 如果值包含逗号、引号或换行符，需要特殊处理
+      if (typeof value === "string") {
+        if (value.includes(",") || value.includes('"') || value.includes("\n")) {
+          // 转义引号并添加引号包裹
+          return '"' + value.replace(/"/g, '""') + '"';
+        }
+      }
+      return value;
+    });
+    csvRows.push(values.join(","));
+  });
+
+  // 创建并下载 CSV 文件
+  const csvContent = "data:text/csv;charset=utf-8," + csvRows.join("\n");
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "用户列表.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  ElMessage.success("CSV 文件导出成功");
 };
 
 // 重置用户密码

@@ -477,6 +477,20 @@
             "isAffix": false,
             "isKeepAlive": true
           }
+        },
+        {
+          "path": "/form/people",
+          "name": "peopleForm",
+          "component": "/form/people/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "患者注册",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
         }
       ]
     },

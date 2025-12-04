@@ -117,3 +117,9 @@ class RequestHttp {
 }
 
 export default new RequestHttp(config);
+
+// 导出所有 API 模块
+export * from "./modules/login";
+export * from "./modules/user";
+export * from "./modules/upload";
+export * from "./modules/goods";

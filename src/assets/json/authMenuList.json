@@ -30,6 +30,20 @@
       }
     },
     {
+      "path": "/batchMall",
+      "name": "batchMall",
+      "component": "/assembly/batchMall/index",
+      "meta": {
+        "icon": "ShoppingCart",
+        "title": "商品详情批量管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
       "path": "/proTable",
       "name": "proTable",
       "redirect": "/proTable/useProTable",
@@ -341,6 +355,20 @@
           "meta": {
             "icon": "Menu",
             "title": "批量添加数据",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/assembly/batchMall",
+          "name": "batchMall",
+          "component": "/assembly/batchMall/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "商品详情批量管理",
             "isLink": "",
             "isHide": false,
             "isFull": false,

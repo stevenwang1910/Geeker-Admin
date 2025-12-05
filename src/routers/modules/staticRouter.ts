@@ -23,7 +23,17 @@ export const staticRouter: RouteRecordRaw[] = [
     component: () => import("@/layouts/index.vue"),
     // component: () => import("@/layouts/indexAsync.vue"),
     redirect: HOME_URL,
-    children: []
+    children: [
+      {
+        path: "/newScreen",
+        name: "newScreen",
+        component: () => import("@/views/newScreen/index.vue"),
+        meta: {
+          title: "新数据大屏",
+          icon: "monitor"
+        }
+      }
+    ]
   }
 ];
 

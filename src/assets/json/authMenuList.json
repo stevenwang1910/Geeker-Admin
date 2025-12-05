@@ -813,6 +813,50 @@
       ]
     },
     {
+      "path": "/finance",
+      "name": "finance",
+      "redirect": "/finance/overview",
+      "meta": {
+        "icon": "Money",
+        "title": "财务管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/finance/overview",
+          "name": "financeOverview",
+          "component": "/finance/overview/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "财务概览",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/finance/transaction-budget",
+          "name": "financeTransactionBudget",
+          "component": "/finance/transaction-budget/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "交易与预算",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
       "path": "/system",
       "name": "system",
       "redirect": "/system/accountManage",

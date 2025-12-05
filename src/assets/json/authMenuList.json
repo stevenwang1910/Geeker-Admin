@@ -813,6 +813,64 @@
       ]
     },
     {
+      "path": "/finance",
+      "name": "finance",
+      "redirect": "/finance/dashboard",
+      "meta": {
+        "icon": "Wallet",
+        "title": "财务管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/finance/dashboard",
+          "name": "financeDashboard",
+          "component": "/finance/dashboard/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "财务仪表盘",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/finance/transactions",
+          "name": "financeTransactions",
+          "component": "/finance/transactions/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "交易记录",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/finance/reports",
+          "name": "financeReports",
+          "component": "/finance/reports/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "财务报表",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
       "path": "/system",
       "name": "system",
       "redirect": "/system/accountManage",

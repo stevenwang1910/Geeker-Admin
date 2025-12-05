@@ -15,3 +15,22 @@ export const userStatus = [
   { label: "启用", value: 1, tagType: "success" },
   { label: "禁用", value: 0, tagType: "danger" }
 ];
+
+/**
+ * @description：工单状态
+ */
+export const ticketStatus = [
+  { label: "待处理", value: 1, tagType: "warning" },
+  { label: "处理中", value: 2, tagType: "primary" },
+  { label: "已解决", value: 3, tagType: "success" },
+  { label: "已关闭", value: 4, tagType: "info" }
+];
+
+/**
+ * @description：工单紧急程度
+ */
+export const ticketPriority = [
+  { label: "低", value: 1, tagType: "success" },
+  { label: "中", value: 2, tagType: "warning" },
+  { label: "高", value: 3, tagType: "danger" }
+];

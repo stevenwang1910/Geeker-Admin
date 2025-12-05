@@ -813,6 +813,92 @@
       ]
     },
     {
+      "path": "/finance",
+      "name": "finance",
+      "redirect": "/finance/dashboard",
+      "meta": {
+        "icon": "Wallet",
+        "title": "财务管理",
+        "isLink": "",
+        "isHide": false,
+        "isFull": false,
+        "isAffix": false,
+        "isKeepAlive": true
+      },
+      "children": [
+        {
+          "path": "/finance/dashboard",
+          "name": "financeDashboard",
+          "component": "/finance/dashboard/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "财务概览",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/finance/transaction",
+          "name": "financeTransaction",
+          "component": "/finance/transaction/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "交易记录",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/finance/statistics",
+          "name": "financeStatistics",
+          "component": "/finance/statistics/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "统计分析",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/finance/budget",
+          "name": "financeBudget",
+          "component": "/finance/budget/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "预算管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        },
+        {
+          "path": "/finance/report",
+          "name": "financeReport",
+          "component": "/finance/report/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "财务报表",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
+        }
+      ]
+    },
+    {
       "path": "/system",
       "name": "system",
       "redirect": "/system/accountManage",

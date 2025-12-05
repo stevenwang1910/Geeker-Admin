@@ -1,0 +1,339 @@
+.constructionScreen-container {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a365d 0%, #2d3748 50%, #1a365d 100%);
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("@/assets/images/constructionScreen/bg-grid.png") repeat;
+    opacity: 0.1;
+    z-index: 1;
+  }
+
+  .constructionScreen-content {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s;
+    transform-origin: left top;
+    z-index: 2;
+
+    .constructionScreen-header {
+      display: flex;
+      width: 100%;
+      height: 38px;
+
+      .header-lf,
+      .header-ri {
+        position: relative;
+        width: 567px;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(255, 107, 53, 0.2) 0%, rgba(255, 140, 0, 0.2) 100%);
+        border: 1px solid rgba(255, 107, 53, 0.3);
+        border-radius: 4px;
+      }
+
+      .header-ct {
+        position: relative;
+        flex: 1;
+        height: 100%;
+
+        .header-ct-title {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 82px;
+          font-family: "Microsoft YaHei", sans-serif;
+          font-size: 32px;
+          line-height: 78px;
+          color: #ff6b35;
+          text-align: center;
+          letter-spacing: 4px;
+          background: linear-gradient(180deg, rgba(255, 107, 53, 0.3) 0%, rgba(255, 140, 0, 0.3) 100%);
+          border: 1px solid rgba(255, 107, 53, 0.4);
+          border-radius: 8px;
+
+          .header-ct-warning {
+            position: absolute;
+            bottom: -42px;
+            left: 50%;
+            width: 622px;
+            height: 44px;
+            font-family: "Microsoft YaHei", sans-serif;
+            font-size: 14px;
+            line-height: 44px;
+            color: #ffd700;
+            text-align: center;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 140, 0, 0.2) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+            transform: translateX(-50%);
+          }
+        }
+      }
+
+      .header-screening,
+      .header-download {
+        position: absolute;
+        z-index: 9;
+        box-sizing: border-box;
+        width: 136px;
+        height: 42px;
+        font-family: "Microsoft YaHei", sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 42px;
+        color: #ff6b35;
+        text-align: center;
+        cursor: pointer;
+        background: linear-gradient(90deg, rgba(255, 107, 53, 0.3) 0%, rgba(255, 140, 0, 0.3) 100%);
+        border: 1px solid rgba(255, 107, 53, 0.4);
+        border-radius: 4px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: linear-gradient(90deg, rgba(255, 107, 53, 0.5) 0%, rgba(255, 140, 0, 0.5) 100%);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        }
+      }
+
+      .header-screening {
+        right: 0;
+        padding-right: 4px;
+      }
+
+      .header-download {
+        left: 0;
+        padding-right: 0;
+      }
+
+      .header-time {
+        position: absolute;
+        top: 0;
+        right: 14px;
+        width: 310px;
+        font-family: "Microsoft YaHei", sans-serif;
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 38px;
+        color: #ff6b35;
+        white-space: nowrap;
+      }
+    }
+
+    .constructionScreen-main {
+      box-sizing: border-box;
+      display: flex;
+      flex: 1;
+      width: 100%;
+      padding: 12px 42px 20px;
+
+      .constructionScreen-lf {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 394px;
+        height: 100%;
+        margin-right: 40px;
+
+        .constructionScreen-top,
+        .constructionScreen-center,
+        .constructionScreen-bottom {
+          position: relative;
+          box-sizing: border-box;
+          width: 100%;
+          padding-top: 54px;
+          background: linear-gradient(180deg, rgba(26, 54, 93, 0.8) 0%, rgba(45, 55, 72, 0.8) 100%);
+          border: 1px solid rgba(255, 107, 53, 0.3);
+          border-radius: 8px;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+
+          &:hover {
+            border-color: rgba(255, 107, 53, 0.5);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+          }
+        }
+
+        .constructionScreen-top {
+          height: 37%;
+        }
+
+        .constructionScreen-center {
+          height: 30%;
+        }
+
+        .constructionScreen-bottom {
+          height: 27%;
+          margin-bottom: 0;
+        }
+      }
+
+      .constructionScreen-ct {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+        margin-right: 40px;
+
+        .constructionScreen-map {
+          position: relative;
+          box-sizing: border-box;
+          flex: 1;
+          width: 100%;
+          margin-top: 78px;
+          background: linear-gradient(180deg, rgba(26, 54, 93, 0.8) 0%, rgba(45, 55, 72, 0.8) 100%);
+          border: 1px solid rgba(255, 107, 53, 0.3);
+          border-radius: 8px;
+          backdrop-filter: blur(10px);
+
+          .constructionScreen-map-title {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            z-index: 99;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            width: 270px;
+            height: 25px;
+            padding-left: 30px;
+            font-size: 14px;
+            color: #ff6b35;
+            letter-spacing: 5px;
+            background: linear-gradient(90deg, rgba(255, 107, 53, 0.3) 0%, rgba(255, 140, 0, 0.3) 100%);
+            border: 1px solid rgba(255, 107, 53, 0.4);
+            border-radius: 4px;
+          }
+
+          .constructionScreen-alarm {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 99;
+            box-sizing: border-box;
+            width: 100%;
+            height: 76px;
+            padding: 2px 30px;
+            overflow: hidden;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 140, 0, 0.2) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 4px;
+
+            .map-item {
+              display: flex;
+              align-items: center;
+              height: 37px;
+              cursor: pointer;
+
+              img {
+                width: 15px;
+                height: 15px;
+                margin-top: 3px;
+                margin-right: 6px;
+              }
+
+              span {
+                font-size: 18px;
+                color: #ffd700;
+              }
+            }
+          }
+        }
+
+        .constructionScreen-cb {
+          position: relative;
+          box-sizing: border-box;
+          width: 100%;
+          height: 252px;
+          padding-top: 54px;
+          background: linear-gradient(180deg, rgba(26, 54, 93, 0.8) 0%, rgba(45, 55, 72, 0.8) 100%);
+          border: 1px solid rgba(255, 107, 53, 0.3);
+          border-radius: 8px;
+          backdrop-filter: blur(10px);
+        }
+      }
+
+      .constructionScreen-rg {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 394px;
+        height: 100%;
+
+        .constructionScreen-top,
+        .constructionScreen-center,
+        .constructionScreen-bottom {
+          position: relative;
+          box-sizing: border-box;
+          width: 100%;
+          padding-top: 54px;
+          background: linear-gradient(180deg, rgba(26, 54, 93, 0.8) 0%, rgba(45, 55, 72, 0.8) 100%);
+          border: 1px solid rgba(255, 107, 53, 0.3);
+          border-radius: 8px;
+          backdrop-filter: blur(10px);
+          transition: all 0.3s ease;
+
+          &:hover {
+            border-color: rgba(255, 107, 53, 0.5);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+          }
+        }
+
+        .constructionScreen-top {
+          height: 37%;
+        }
+
+        .constructionScreen-center {
+          height: 30%;
+        }
+
+        .constructionScreen-bottom {
+          height: 27%;
+          margin-bottom: 0;
+        }
+      }
+
+      .constructionScreen-main-title {
+        position: absolute;
+        top: 1px;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+
+        span {
+          margin-bottom: 12px;
+          font-family: "Microsoft YaHei", sans-serif;
+          font-size: 18px;
+          line-height: 16px;
+          color: #ffffff;
+          letter-spacing: 1px;
+        }
+
+        img {
+          width: 68px;
+          height: 7px;
+        }
+      }
+
+      .constructionScreen-main-chart {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}

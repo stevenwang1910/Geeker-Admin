@@ -102,8 +102,11 @@ const columns = reactive<ColumnProps<User.ResUserList>[]>([
 
 // 选择行
 const setCurrent = () => {
-  proTable.value?.element?.setCurrentRow(proTable.value?.tableData[4]);
-  proTable.value?.element?.toggleRowSelection(proTable.value?.tableData[4], true);
+  const rowData = proTable.value?.tableData[4] as User.ResUserList;
+  if (rowData) {
+    proTable.value?.element?.setCurrentRow(rowData);
+    proTable.value?.element?.toggleRowSelection(rowData, true);
+  }
 };
 
 // 表尾合计行（自行根据条件计算）

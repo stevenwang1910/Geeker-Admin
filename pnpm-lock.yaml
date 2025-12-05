@@ -71,6 +71,9 @@ importers:
       vue-router:
         specifier: ^4.4.0
         version: 4.6.3(vue@3.5.25(typescript@5.9.3))
+      vue3-seamless-scroll:
+        specifier: ^3.0.2
+        version: 3.0.2(vue@3.5.25(typescript@5.9.3))
       vuedraggable:
         specifier: ^4.1.0
         version: 4.1.0(vue@3.5.25(typescript@5.9.3))
@@ -129,9 +132,6 @@ importers:
       eslint-plugin-vue:
         specifier: ^9.26.0
         version: 9.33.0(eslint@8.57.1)
-      husky:
-        specifier: ^9.0.11
-        version: 9.1.7
       lint-staged:
         specifier: ^15.2.5
         version: 15.5.2
@@ -3069,11 +3069,6 @@ packages:
     resolution: {integrity: sha512-eKCa6bwnJhvxj14kZk5NCPc6Hb6BdsU9DZcOnmQKSnO1VKrfV0zCvtttPZUsBvjmNDn8rpcJfpwSYnHBjc95MQ==}
     engines: {node: '>=18.18.0'}
 
-  husky@9.1.7:
-    resolution: {integrity: sha512-5gs5ytaNjBrh5Ow3zrvdUUY+0VxIuWVL4i9irt6friV+BqdCfmV11CQTWMiBYWHbXhco+J1kHfTOUkePhCDvMA==}
-    engines: {node: '>=18'}
-    hasBin: true
-
   i18next@20.6.1:
     resolution: {integrity: sha512-yCMYTMEJ9ihCwEQQ3phLo7I/Pwycf8uAx+sRHwwk5U9Aui/IZYgQRyMqXafQOw5QQ7DM1Z+WyEXWIqSuJHhG2A==}
 
@@ -5179,6 +5174,9 @@ packages:
     hasBin: true
     peerDependencies:
       typescript: '>=5.0.0'
+
+  vue3-seamless-scroll@3.0.2:
+    resolution: {integrity: sha512-LpKoL1ht71MASabUBsoSqbhLqcuKSrD+u01dgHac+/cthPAShKvcdM7dSGtaxjVntSFqdeViqJssjcwy/KqRSA==}
 
   vue@3.5.25:
     resolution: {integrity: sha512-YLVdgv2K13WJ6n+kD5owehKtEXwdwXuj2TTyJMsO7pSeKw2bfRNZGjhB7YzrpbMYj5b5QsUebHpOqR3R3ziy/g==}
@@ -8667,8 +8665,6 @@ snapshots:
 
   human-signals@8.0.1: {}
 
-  husky@9.1.7: {}
-
   i18next@20.6.1:
     dependencies:
       '@babel/runtime': 7.28.4
@@ -10841,6 +10837,13 @@ snapshots:
       '@volar/typescript': 2.4.15
       '@vue/language-core': 2.2.12(typescript@5.9.3)
       typescript: 5.9.3
+
+  vue3-seamless-scroll@3.0.2(vue@3.5.25(typescript@5.9.3)):
+    dependencies:
+      element-plus: 2.11.9(vue@3.5.25(typescript@5.9.3))
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
 
   vue@3.5.25(typescript@5.9.3):
     dependencies:

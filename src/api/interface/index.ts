@@ -88,3 +88,63 @@ export namespace User {
     children?: ResDepartment[];
   }
 }
+
+// 工单管理模块
+export namespace Ticket {
+  export interface ReqTicketParams extends ReqPage {
+    ticketNo: string;
+    customerName: string;
+    customerPhone: string;
+    priority: number;
+    status: number;
+    submitTime: string[];
+    handler: string;
+  }
+  export interface ResTicketList {
+    id: number;
+    ticketNo: string;
+    customerName: string;
+    customerPhone: string;
+    customerEmail: string;
+    priority: number;
+    status: number;
+    description: string;
+    attachments: any[];
+    submitTime: string;
+    handler: string;
+    handleContent: string;
+    handleResult: string;
+    handleTime: string;
+    createTime: string;
+    updateTime: string;
+  }
+  export interface ReqTicketForm {
+    id?: number;
+    ticketNo: string;
+    customerName: string;
+    customerPhone: string;
+    customerEmail: string;
+    priority: number;
+    status: number;
+    description: string;
+    attachments: any[];
+    handler: string;
+    handleContent: string;
+    handleResult: string;
+  }
+  export interface ReqHandleTicket {
+    ticketId: number;
+    handler: string;
+    handleContent: string;
+    handleResult: string;
+    status: number;
+  }
+  export interface ResHandleRecord {
+    id: number;
+    ticketId: number;
+    handler: string;
+    handleContent: string;
+    handleResult: string;
+    handleTime: string;
+  }
+}

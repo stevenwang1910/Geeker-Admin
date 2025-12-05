@@ -30,6 +30,20 @@
       }
     },
     {
+      "path": "/newScreen",
+      "name": "newScreen",
+      "component": "/newScreen/index",
+      "meta": {
+        "icon": "monitor",
+        "title": "新数据大屏",
+        "isLink": "",
+        "isHide": false,
+        "isFull": true,
+        "isAffix": false,
+        "isKeepAlive": true
+      }
+    },
+    {
       "path": "/proTable",
       "name": "proTable",
       "redirect": "/proTable/useProTable",

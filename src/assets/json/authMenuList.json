@@ -923,6 +923,20 @@
             "isAffix": false,
             "isKeepAlive": true
           }
+        },
+        {
+          "path": "/system/ticketManage",
+          "name": "ticketManage",
+          "component": "/system/ticketManage/index",
+          "meta": {
+            "icon": "Menu",
+            "title": "工单管理",
+            "isLink": "",
+            "isHide": false,
+            "isFull": false,
+            "isAffix": false,
+            "isKeepAlive": true
+          }
         }
       ]
     },
